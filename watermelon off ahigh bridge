@@ -1,0 +1,52 @@
+/*Suppose Dave drops a watermelon off ahigh bridge and lets it fall until it hits the water. If we neglect air resistance, then the distance d in meters fallen by the
+watermelon after t seconds is d = 0.5 * g * t2,where the acceleration of gravity g = 9.8 meters/second2. Write program that asks the user to input the number of seconds
+that the watermelon falls and the height h of the bridge above the water. The program should then calculate the distance fallen for each second from t 0 until the value
+of t input by the user.If the total distance fallen is greater than the height of the bridge, then the program should tell the user that the distance fallen is not valid.*/
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+	const double GRAVITY = 9.8; // acceleration due to gravity
+
+	int    input_s;             // user-given time of fall
+	double input_h;             // user-given fall height
+	
+	// ask for those inputs
+	cout << "Please input the time of fall in seconds:\n";
+	cin >> input_s;
+	cout << "Please input the height of the bridge in meters:\n";
+	cin >> input_h;
+	
+	// draw the first part of the table
+	cout << '\n'
+	     << "Time Falling (seconds) Distance Fallen (meters)\n"
+	        "*****************\n";
+	//      "                   (23)                    (24)\n"
+	
+	int    step_seconds  = 0;     // which second of the simulation we're on
+	double step_distance = 0;     // how far the melon has come so far
+	bool   bad_estimate = false;  // whether or not we go over input_h
+	while ( step_seconds <= input_s) {
+		// output what step we're on and our distance traveled so far
+		cout << setw(23) << left << step_seconds
+		     << setw(24) << left << step_distance << '\n';
+		// check to see if that distance traveled is past user-input height
+		if ( step_distance > input_h ) {
+			bad_estimate = true;
+		}
+		// do calculation for the next step
+		step_seconds += 1;
+		step_distance = 0.5 * GRAVITY * (step_seconds) * (step_seconds);
+	}
+	
+	cout << '\n'; // make our output prettier
+	
+	if ( bad_estimate ) { // warning 
+		cout << "Warning - Bad Data: The distance fallen exceeds the height"
+		        " of the bridge.\n";
+	}
+	
+	return 0;
+}
