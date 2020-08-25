@@ -1,0 +1,49 @@
+/*(Sales Commission Calculator) One large chemical company pays its salespeople on a commission basis. The salespeople receive RS. 200 per week plus 9% of their gross sales for that week. For example, a salesperson who sells RS. 5000 worth of chemicals in a week receives RS. 200 plus 9% of RS. 5000, or a total of RS. 650. Write a program that will input each salesperson's gross sales for last week and will calculate and display that salesperson's earnings. Process one salesperson's figures at a time. Here is a sample input/output dialog:*/
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+	const double GRAVITY = 9.8; // acceleration due to gravity
+
+	int    input_s;             // user-given time of fall
+	double input_h;             // user-given fall height
+	
+	// ask for those inputs
+	cout << "Please input the time of fall in seconds:\n";
+	cin >> input_s;
+	cout << "Please input the height of the bridge in meters:\n";
+	cin >> input_h;
+	
+	// draw the first part of the table
+	cout << '\n'
+	     << "Time Falling (seconds) Distance Fallen (meters)\n"
+	        "*****************\n";
+	//      "                   (23)                    (24)\n"
+	
+	int    step_seconds  = 0;     // which second of the simulation we're on
+	double step_distance = 0;     // how far the melon has come so far
+	bool   bad_estimate = false;  // whether or not we go over input_h
+	while ( step_seconds <= input_s) {
+		// output what step we're on and our distance traveled so far
+		cout << setw(23) << left << step_seconds
+		     << setw(24) << left << step_distance << '\n';
+		// check to see if that distance traveled is past user-input height
+		if ( step_distance > input_h ) {
+			bad_estimate = true;
+		}
+		// do calculation for the next step
+		step_seconds += 1;
+		step_distance = 0.5 * GRAVITY * (step_seconds) * (step_seconds);
+	}
+	
+	cout << '\n'; // make our output prettier
+	
+	if ( bad_estimate ) { // warning 
+		cout << "Warning - Bad Data: The distance fallen exceeds the height"
+		        " of the bridge.\n";
+	}
+	
+	return 0;
+}
